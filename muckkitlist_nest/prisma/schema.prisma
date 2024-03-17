@@ -1,0 +1,147 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model GroupMuckatList {
+  groupmuckat_id String        @db.VarChar(255)
+  user_id        String        @db.VarChar(50)
+  group_name     String        @db.VarChar(255)
+  room_master    Boolean
+  User_Info      User_Info     @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "GroupMuckatList_ibfk_1")
+  Image_Group    Image_Group[]
+
+  @@id([groupmuckat_id, user_id])
+  @@index([user_id], map: "user_id")
+}
+
+model Image_DB {
+  image_id        String   @id @db.VarChar(255)
+  image_timestamp DateTime @db.Date
+}
+
+model Image_Group {
+  image_group_id  String          @db.VarChar(255)
+  groupmuckat_id  String          @db.VarChar(255)
+  image_src       String          @db.VarChar(255)
+  GroupMuckatList GroupMuckatList @relation(fields: [groupmuckat_id], references: [groupmuckat_id], onDelete: NoAction, onUpdate: NoAction, map: "Image_Group_ibfk_1")
+
+  @@id([image_group_id, groupmuckat_id])
+  @@index([groupmuckat_id], map: "groupmuckat_id")
+}
+
+model Image_personal {
+  image_personal_id String    @db.VarChar(255)
+  user_id           String    @db.VarChar(50)
+  image_src         String    @db.VarChar(255)
+  User_Info         User_Info @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "Image_personal_ibfk_1")
+
+  @@id([image_personal_id, user_id])
+  @@index([user_id], map: "user_id")
+}
+
+model KakaoLogin {
+  code          String @id @db.VarChar(255)
+  refresh_token String @db.VarChar(255)
+  kakao_id      String @db.VarChar(255)
+}
+
+model Memo {
+  muckatlist_id   String          @db.VarChar(255)
+  memo_id         String          @db.VarChar(255)
+  restaurant_id   String          @db.VarChar(255)
+  Restaurant_info Restaurant_info @relation(fields: [restaurant_id], references: [restaurant_id], onDelete: NoAction, onUpdate: NoAction, map: "Memo_ibfk_1")
+
+  @@id([muckatlist_id, memo_id, restaurant_id])
+  @@index([restaurant_id], map: "restaurant_id")
+}
+
+model PersonalMuckatList {
+  personal_muckat_id String    @db.VarChar(255)
+  user_id            String    @db.VarChar(50)
+  personal_name      String?   @db.VarChar(255)
+  User_Info          User_Info @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "PersonalMuckatList_ibfk_1")
+
+  @@id([personal_muckat_id, user_id])
+  @@index([user_id], map: "user_id")
+}
+
+model Restaurant_info {
+  restaurant_id   String          @id @db.VarChar(255)
+  restaurant_name String          @db.VarChar(255)
+  address         String?         @db.VarChar(255)
+  review_count    Int?
+  avg_grade       Float?
+  link            String?         @db.VarChar(255)
+  phone_number    String?         @db.VarChar(20)
+  category        String?         @db.VarChar(50)
+  Memo            Memo[]
+  Schedule        Schedule[]
+  User_Favorite   User_Favorite[]
+  User_Review     User_Review[]
+}
+
+model Schedule {
+  schedule_id     String          @db.VarChar(255)
+  restaurant_id   String          @db.VarChar(255)
+  group_schedule  Boolean
+  muckatlist_id   String          @db.VarChar(255)
+  schedule_time   DateTime        @db.Date
+  Restaurant_info Restaurant_info @relation(fields: [restaurant_id], references: [restaurant_id], onDelete: NoAction, onUpdate: NoAction, map: "Schedule_ibfk_1")
+
+  @@id([schedule_id, restaurant_id])
+  @@index([restaurant_id], map: "restaurant_id")
+}
+
+model University_info {
+  university_name String      @id @db.VarChar(255)
+  address         String      @db.VarChar(255)
+  position_x      Float
+  position_y      Float
+  User_Info       User_Info[]
+}
+
+model User_Favorite {
+  user_id         String          @db.VarChar(50)
+  restaurant_id   String          @db.VarChar(255)
+  User_Info       User_Info       @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "User_Favorite_ibfk_1")
+  Restaurant_info Restaurant_info @relation(fields: [restaurant_id], references: [restaurant_id], onDelete: NoAction, onUpdate: NoAction, map: "User_Favorite_ibfk_2")
+
+  @@id([user_id, restaurant_id])
+  @@index([restaurant_id], map: "restaurant_id")
+}
+
+model User_Info {
+  user_id            String               @db.VarChar(50)
+  university_name    String               @db.VarChar(255)
+  point              Int
+  fcm_token          String               @db.VarChar(255)
+  GroupMuckatList    GroupMuckatList[]
+  Image_personal     Image_personal[]
+  PersonalMuckatList PersonalMuckatList[]
+  User_Favorite      User_Favorite[]
+  University_info    University_info      @relation(fields: [university_name], references: [university_name], onDelete: NoAction, onUpdate: NoAction, map: "User_Info_ibfk_1")
+  User_Review        User_Review[]
+
+  @@id([user_id, university_name])
+  @@index([university_name], map: "university_name")
+}
+
+model User_Review {
+  user_review_id  String          @db.VarChar(255)
+  restaurant_id   String          @db.VarChar(255)
+  user_id         String          @db.VarChar(50)
+  star            Float
+  write_time      String?         @db.VarChar(255)
+  details         String?         @db.VarChar(255)
+  Restaurant_info Restaurant_info @relation(fields: [restaurant_id], references: [restaurant_id], onDelete: NoAction, onUpdate: NoAction, map: "User_Review_ibfk_1")
+  User_Info       User_Info       @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "User_Review_ibfk_2")
+
+  @@id([user_review_id, restaurant_id, user_id])
+  @@index([restaurant_id], map: "restaurant_id")
+  @@index([user_id], map: "user_id")
+}
