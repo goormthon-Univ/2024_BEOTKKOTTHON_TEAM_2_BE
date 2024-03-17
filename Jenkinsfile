@@ -13,7 +13,7 @@ pipeline {
         //window는 sh -> bat 변경 필요
         stage('Install Dependencies') {
             steps {
-                dir('./muckkitlist_nest'){
+                dir('./muckatlist_nest'){
                     script {
                         sh 'npm install'
                     }
@@ -23,7 +23,7 @@ pipeline {
 
         stage('Build And Deploy') {
             steps {
-                dir('./muckkitlist_nest'){
+                dir('./muckatlist_nest'){
                     script {
                         sh 'npm run start:dev'
                     }
