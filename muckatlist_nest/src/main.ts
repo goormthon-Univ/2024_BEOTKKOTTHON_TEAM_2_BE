@@ -7,7 +7,7 @@ async function bootstrap() {
   app.enableCors();
   // Swagger 옵션 설정
   const options = new DocumentBuilder()
-    .setTitle('Your API')
+    .setTitle('네스트 프로젝트 API')
     .setDescription('API description')
     .setVersion('1.0')
     .build();
