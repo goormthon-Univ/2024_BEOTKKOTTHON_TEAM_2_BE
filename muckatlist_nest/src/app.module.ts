@@ -5,12 +5,18 @@ import { RestaurantModule } from './restaurant/restaurant.module';
 import { GroupMuckatlistModule } from './group-muckatlist/group-muckatlist.module';
 import { PersonalMuckatlistModule } from './personal-muckatlist/personal-muckatlist.module';
 import { FavoritelistModule } from './favoritelist/favoritelist.module';
+import { PernalmuckatImageModule } from './pernalmuckat-image/pernalmuckat-image.module';
+import { GroupmuckatImageModule } from './groupmuckat-image/groupmuckat-image.module';
+import { PersonalmuckatImageModule } from './personalmuckat-image/personalmuckat-image.module';
 @Module({
   imports: [
     RestaurantModule,
     GroupMuckatlistModule,
     PersonalMuckatlistModule,
     FavoritelistModule,
+    PernalmuckatImageModule,
+    GroupmuckatImageModule,
+    PersonalmuckatImageModule,
   ],
   controllers: [AppController],
   providers: [AppService],
