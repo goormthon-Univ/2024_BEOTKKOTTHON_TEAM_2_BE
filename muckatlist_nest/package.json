@@ -26,9 +26,11 @@
     "@nestjs/platform-express": "^10.0.0",
     "@nestjs/swagger": "^7.3.0",
     "@prisma/client": "^5.11.0",
+    "@types/uuid": "^9.0.8",
     "mysql2": "^3.9.2",
     "nest-mysql": "^0.0.12",
-    "reflect-metadata": "^0.2.0"
+    "reflect-metadata": "^0.2.0",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@nestjs/cli": "^10.0.0",
