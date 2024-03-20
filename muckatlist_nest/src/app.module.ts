@@ -1,23 +1,21 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { RestaurantModule } from './restaurant/restaurant.module';
-import { GroupMuckatlistModule } from './group-muckatlist/group-muckatlist.module';
-import { PersonalMuckatlistModule } from './personal-muckatlist/personal-muckatlist.module';
-import { FavoritelistModule } from './favoritelist/favoritelist.module';
+import { GroupMuckatModule } from './groupmuckat/groupmuckat.module';
+import { PersonalMuckatModule } from './personalmuckat/personalmuckat.module';
+import { FavoriteModule } from './favorite/favorite.module';
 import { GroupmuckatImageModule } from './groupmuckat-image/groupmuckat-image.module';
 import { PersonalmuckatImageModule } from './personalmuckat-image/personalmuckat-image.module';
 @Module({
   imports: [
     RestaurantModule,
-    GroupMuckatlistModule,
-    PersonalMuckatlistModule,
-    FavoritelistModule,
+    GroupMuckatModule,
+    PersonalMuckatModule,
+    FavoriteModule,
     GroupmuckatImageModule,
     PersonalmuckatImageModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {
 }
