@@ -1,5 +1,5 @@
 import { Controller, Get, Param } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { RestaurantService } from './restaurant.service';
 import { throwErrorHttp } from 'src/utils';
 
@@ -8,6 +8,7 @@ import { throwErrorHttp } from 'src/utils';
 export class RestaurantController {
     constructor(private readonly restaurantService: RestaurantService){}
 
+    @ApiOperation({ summary: '모든 맛집 목록 조회'})
     @Get()
     async getAllRestaurant(){
       try{
@@ -18,6 +19,7 @@ export class RestaurantController {
       } 
     }
 
+    @ApiOperation({ summary: '맛집 상세 조회'})
     @Get('/:restaurant_Id')
     async getRestaurantInformation(@Param('restaurant_Id') restaurant_Id: string){
         try{
@@ -28,6 +30,7 @@ export class RestaurantController {
         } 
     }
 
+    @ApiOperation({ summary: '카테고리 별 맛집 조회'})
     @Get('/:category')
     async getCategoryRestaurant(@Param('category') category: string){
         try{
