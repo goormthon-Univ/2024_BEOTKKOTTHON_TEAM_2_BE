@@ -5,6 +5,7 @@ import { PersonalMuckatModule } from './personalmuckat/personalmuckat.module';
 import { FavoriteModule } from './favorite/favorite.module';
 import { GroupmuckatImageModule } from './groupmuckat-image/groupmuckat-image.module';
 import { PersonalmuckatImageModule } from './personalmuckat-image/personalmuckat-image.module';
+import { UserModule } from './user/user.module';
 @Module({
   imports: [
     RestaurantModule,
@@ -13,6 +14,7 @@ import { PersonalmuckatImageModule } from './personalmuckat-image/personalmuckat
     FavoriteModule,
     GroupmuckatImageModule,
     PersonalmuckatImageModule,
+    UserModule,
   ],
   controllers: [],
   providers: [],
