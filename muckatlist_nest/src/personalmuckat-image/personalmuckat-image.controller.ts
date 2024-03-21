@@ -5,7 +5,7 @@ import { throwErrorHttp } from 'src/utils';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('개인 먹킷리스트 추억 보관함')
-@Controller('personalmuckat-image')
+@Controller('/api/personalmuckat-image')
 export class PersonalmuckatImageController {
 
     constructor(private readonly personalmuckatImage: PersonalmuckatImageService){}

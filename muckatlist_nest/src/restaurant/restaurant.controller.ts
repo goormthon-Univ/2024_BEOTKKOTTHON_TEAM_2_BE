@@ -4,7 +4,7 @@ import { RestaurantService } from './restaurant.service';
 import { throwErrorHttp } from 'src/utils';
 
 @ApiTags('맛집')
-@Controller('restaurant')
+@Controller('/api/restaurant')
 export class RestaurantController {
     constructor(private readonly restaurantService: RestaurantService){}
 
