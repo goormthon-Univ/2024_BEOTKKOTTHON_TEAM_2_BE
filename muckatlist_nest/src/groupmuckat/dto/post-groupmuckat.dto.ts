@@ -4,7 +4,7 @@ export class PostGroupmuckatDto{
     // @ApiProperty()
     // groupmuckatlist_Id: string;
     @ApiProperty()
-    user_Id: string;
+    kakao_Id: string;
     @ApiProperty()
     groupmuckat_Name: string;
     // @ApiProperty()

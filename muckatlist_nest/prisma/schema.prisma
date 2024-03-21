@@ -18,14 +18,9 @@ model group_muckat_list {
   @@index([user_id], map: "FKo3qyb4j31ev48215wj2ck0x43")
 }
 
-model image_db {
-  image_id        String    @id @db.VarChar(255)
-  image_timestamp DateTime? @db.Date
-}
-
 model image_group {
   image_group_id    String             @id @db.VarChar(255)
-  image_src         String?            @db.VarChar(255)
+  timestamp         DateTime?          @db.Date
   groupmuckat_id    String?            @db.VarChar(255)
   group_muckat_list group_muckat_list? @relation(fields: [groupmuckat_id], references: [groupmuckat_id], onDelete: NoAction, onUpdate: NoAction, map: "FK4gcr3qggnmi4evs2pe3onl5fd")
 
@@ -33,24 +28,30 @@ model image_group {
 }
 
 model image_personal {
-  image_personal_id String     @id @db.VarChar(255)
-  image_src         String?    @db.VarChar(255)
-  user_id           String?    @db.VarChar(255)
-  user_info         user_info? @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "FKtgnb0s5ox9mdqdi6kciwbvw7f")
+  image_personal_id    String                @id @db.VarChar(255)
+  timestamp            DateTime?             @db.Date
+  personal_muckat_id   String?               @db.VarChar(255)
+  user_id              String?               @db.VarChar(255)
+  personal_muckat_list personal_muckat_list? @relation(fields: [personal_muckat_id], references: [personal_muckat_id], onDelete: NoAction, onUpdate: NoAction, map: "FK4y487mft4tvmqj2snudoy81jv")
+  user_info            user_info?            @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "FKtgnb0s5ox9mdqdi6kciwbvw7f")
 
+  @@index([personal_muckat_id], map: "FK4y487mft4tvmqj2snudoy81jv")
   @@index([user_id], map: "FKtgnb0s5ox9mdqdi6kciwbvw7f")
 }
 
 model kakao_login {
-  code          String  @id @db.VarChar(255)
-  kakao_id      String? @db.VarChar(255)
-  refresh_token String? @db.VarChar(255)
+  code          String     @id @db.VarChar(255)
+  refresh_token String?    @db.VarChar(255)
+  user_id       String?    @db.VarChar(255)
+  user_info     user_info? @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "FKb1bom3prg3nmub7ich42imih2")
+
+  @@index([user_id], map: "FKb1bom3prg3nmub7ich42imih2")
 }
 
 model memo {
   muckatlist_id   String           @id @db.VarChar(255)
   checks          Boolean?         @db.Bit(1)
-  memo_id         String?          @db.VarChar(255)
+  group_check     Boolean?         @db.Bit(1)
   restaurant_id   String?          @db.VarChar(255)
   restaurant_info restaurant_info? @relation(fields: [restaurant_id], references: [restaurant_id], onDelete: NoAction, onUpdate: NoAction, map: "FKtmkyarlv1eq4rftv8mjajx3mj")
 
@@ -58,10 +59,11 @@ model memo {
 }
 
 model personal_muckat_list {
-  personal_muckat_id String     @id @db.VarChar(255)
-  personal_name      String?    @db.VarChar(255)
-  user_id            String?    @db.VarChar(255)
-  user_info          user_info? @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "FK1p778kkl1p4sseg9y2fmkuq81")
+  personal_muckat_id String           @id @db.VarChar(255)
+  personal_name      String?          @db.VarChar(255)
+  user_id            String?          @db.VarChar(255)
+  image_personal     image_personal[]
+  user_info          user_info?       @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "FK1p778kkl1p4sseg9y2fmkuq81")
 
   @@index([user_id], map: "FK1p778kkl1p4sseg9y2fmkuq81")
 }
@@ -118,6 +120,7 @@ model user_info {
   university_name      String?                @db.VarChar(255)
   group_muckat_list    group_muckat_list[]
   image_personal       image_personal[]
+  kakao_login          kakao_login[]
   personal_muckat_list personal_muckat_list[]
   user_favorite        user_favorite[]
   university_info      university_info?       @relation(fields: [university_name], references: [university_name], onDelete: NoAction, onUpdate: NoAction, map: "FK9e1ab5ppk0i8s2ywln9s25qw5")
@@ -129,7 +132,7 @@ model user_info {
 model user_review {
   user_review_id  String           @id @db.VarChar(255)
   details         String?          @db.VarChar(255)
-  like_count      String?          @db.VarChar(255)
+  like_count      Int?
   star            Float?
   write_time      String?          @db.VarChar(255)
   restaurant_id   String?          @db.VarChar(255)
@@ -139,11 +142,4 @@ model user_review {
 
   @@index([user_id], map: "FKdeuf08jy10mno46ofsec91hpx")
   @@index([restaurant_id], map: "FKk5s9qoc9tescy10mlfmw06bbf")
-}
-
-/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
-model user_review_seq {
-  next_val BigInt?
-
-  @@ignore
 }

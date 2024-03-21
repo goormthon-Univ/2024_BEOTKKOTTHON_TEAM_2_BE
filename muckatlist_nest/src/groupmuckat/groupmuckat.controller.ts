@@ -10,8 +10,8 @@ export class GroupmuckatController {
     constructor(private readonly groupmuckatService: GroupmuckatService){}
     
     @ApiOperation({ summary: '사용자가 참가하고 있는 모든 그룹 먹킷리스트 목록 조회'})
-    @Get('/:user_Id')
-    async getGroupmuckat(@Param('user_Id') user_Id: string){
+    @Get('/:kakao_Id')
+    async getGroupmuckat(@Param('kakao_Id') kakao_Id: string){
         
     }
 
@@ -49,8 +49,8 @@ export class GroupmuckatController {
     // }
 
     @ApiOperation({ summary: '사용자 그룹 먹킷리스트 삭제(사용자가 해당 그룹먹킷리스트 방장이면 그룹먹킷리스트 아예 삭제)'})
-    @Delete('/:groupmuckat_Id/:user_Id')
-    async deleteGroupmuckat(@Param('groupmuckat_Id') groupmuckat_Id: string, @Param('user_Id') user_Id: string){
+    @Delete('/:groupmuckat_Id/:kakao_Id')
+    async deleteGroupmuckat(@Param('groupmuckat_Id') groupmuckat_Id: string, @Param('kakao_Id') kakao_Id: string){
         try{
 
         }

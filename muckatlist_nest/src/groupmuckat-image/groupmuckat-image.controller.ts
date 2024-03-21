@@ -1,8 +1,9 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { Body, Controller, Delete, Get, Param, Post, UploadedFile } from '@nestjs/common';
+import { ApiConsumes, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { GroupmuckatImageService } from './groupmuckat-image.service';
 import { PostGroupmuckatImageDto } from './dto';
 import { throwErrorHttp } from 'src/utils';
+import { ApiFile } from 'src/decorators';
 
 @ApiTags('그룹 먹킷리스트 추억 보관함')
 @Controller('/api/groupmuckat-image')
@@ -10,6 +11,7 @@ export class GroupmuckatImageController {
     constructor(private readonly groupmuckatImage: GroupmuckatImageService){}
     
     @ApiOperation({ summary: '그룹 먹킷리스트 이미지 저장'})
+    @ApiConsumes('multipart/form-data')
     @Post()
     async postGroupmuckatImage(@Body() postGroupmuckatImageDto: PostGroupmuckatImageDto){
         try{

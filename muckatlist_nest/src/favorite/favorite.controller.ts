@@ -11,10 +11,10 @@ export class FavoriteController {
 
 
     @ApiOperation({ summary: '사용자 마음함 조회'})
-    @Get('/:user_Id')
-    async getUserFavoriteLis(@Param('user_Id') user_Id: string){
+    @Get('/:kakao_Id')
+    async getUserFavoriteLis(@Param('kakao_Id') kakao_Id: string){
         try{
-            return await this.favoriteService.getUserFavoriteInformation(user_Id);
+            return await this.favoriteService.getUserFavoriteInformation(kakao_Id);
         }
         catch (error) {
             throwErrorHttp(error)
@@ -33,10 +33,10 @@ export class FavoriteController {
     }
 
     @ApiOperation({ summary: '마음함 항목 삭제'})
-    @Delete('/:user_Id/:restaurant_Id')
-    async deleteUserFavorite(@Param('user_Id') user_Id: string, @Param('restaurant_Id') restaurant_Id: string){
+    @Delete('/:kakao_Id/:restaurant_Id')
+    async deleteUserFavorite(@Param('kakao_Id') kakao_Id: string, @Param('restaurant_Id') restaurant_Id: string){
         try{
-            await this.favoriteService.deleteUserFavoriteInformation(user_Id, restaurant_Id);
+            await this.favoriteService.deleteUserFavoriteInformation(kakao_Id, restaurant_Id);
         }
         catch (error) {
             throwErrorHttp(error);

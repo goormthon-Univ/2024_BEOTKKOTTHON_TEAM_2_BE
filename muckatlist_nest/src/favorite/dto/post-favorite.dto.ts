@@ -1,7 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger"
 export class PostFavoriteDto {
     @ApiProperty()
-    restaurant_Id: string;
+    kakao_Id: string;
     @ApiProperty()
-    user_Id: string;
+    restaurant_Id: string;
 }

@@ -1,7 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger";
 
 export class PostGroupmuckatImageDto{
-    @ApiProperty()
+    @ApiProperty({ type: 'string', format: 'binary' })
     image: File;
     @ApiProperty()
     groupmuckat_Id: string;

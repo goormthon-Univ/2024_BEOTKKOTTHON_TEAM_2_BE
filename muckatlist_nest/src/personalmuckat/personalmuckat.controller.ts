@@ -10,8 +10,8 @@ export class PersonalmuckatController {
     constructor(private readonly personalmuckatService: PersonalmuckatService){}
 
     @ApiOperation({ summary: '사용자의 모든 개인 먹킷리스트 목록 조회'})
-    @Get('/:user_Id')
-    async getPersonalmuckat(@Param('user_Id') user_Id: string){
+    @Get('/:kakao_Id')
+    async getPersonalmuckat(@Param('kakao_Id') kakao_Id: string){
         try{
 
         }
@@ -32,8 +32,8 @@ export class PersonalmuckatController {
     }
 
     @ApiOperation({ summary: '개인 먹킷리스트 삭제'})
-    @Delete('/:user_Id/:personalmuckat_Id')
-    async deletePersonalmuckat(@Param('user_Id') user_Id: string, @Param('personalmuckat_Id') groupmuckat_Id: string){
+    @Delete('/:kakao_Id/:personalmuckat_Id')
+    async deletePersonalmuckat(@Param('kakao_Id') kakao_Id: string, @Param('personalmuckat_Id') groupmuckat_Id: string){
         try{
 
         }
