@@ -1,6 +1,6 @@
 import { BadGatewayException, BadRequestException, ConflictException, ForbiddenException, GatewayTimeoutException, GoneException, HttpException, HttpStatus, HttpVersionNotSupportedException, ImATeapotException, InternalServerErrorException, MethodNotAllowedException, NotAcceptableException, NotFoundException, NotImplementedException, PayloadTooLargeException, PreconditionFailedException, RequestTimeoutException, ServiceUnavailableException, UnauthorizedException, UnprocessableEntityException, UnsupportedMediaTypeException } from "@nestjs/common";
 
-export function throwError(error: Error) {
+export function throwErrorHttp(error: Error) {
     if (error instanceof BadRequestException)
         throw new HttpException('BadRequest', HttpStatus.BAD_REQUEST);
     else if (error instanceof UnauthorizedException)

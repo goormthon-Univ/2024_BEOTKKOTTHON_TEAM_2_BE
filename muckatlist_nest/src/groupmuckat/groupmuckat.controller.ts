@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { GroupmuckatService } from './groupmuckat.service';
-import { throwError } from 'src/utils';
+import { throwErrorHttp } from 'src/utils';
 import { PostGroupmuckatDto, PostGroupmuckatJoinDto } from './dto';
 
 @ApiTags('그룹 먹킷리스트')
@@ -21,7 +21,7 @@ export class GroupmuckatController {
 
         }
         catch (error) {
-            throwError(error);
+            throwErrorHttp(error);
         }
     }
 
@@ -31,7 +31,7 @@ export class GroupmuckatController {
 
         }
         catch (error) {
-            throwError(error);
+            throwErrorHttp(error);
         }
     }
 
@@ -41,7 +41,7 @@ export class GroupmuckatController {
 
     //     }
     //     catch (error) {
-    //         throwError(error);
+    //         throwErrorHttp(error);
     //     }
     // }
 
@@ -51,7 +51,7 @@ export class GroupmuckatController {
 
         }
         catch (error) {
-            throwError(error);
+            throwErrorHttp(error);
         }
     }
 }

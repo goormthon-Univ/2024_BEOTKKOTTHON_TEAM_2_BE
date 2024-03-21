@@ -2,7 +2,7 @@ import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { FavoriteService } from './favorite.service';
 import { PostFavoriteDto } from './dto';
-import { throwError } from 'src/utils';
+import { throwErrorHttp } from 'src/utils';
 
 @ApiTags('마음함')
 @Controller('/api/favorite')
@@ -16,7 +16,7 @@ export class FavoriteController {
             return await this.favoriteService.getUserFavoriteInformation(user_Id);
         }
         catch (error) {
-            throwError(error)
+            throwErrorHttp(error)
         }
     }
 
@@ -26,7 +26,7 @@ export class FavoriteController {
             await this.favoriteService.postUserFavoriteInformation(postFavoriteDto);
         }
         catch (error) {
-            throwError(error)
+            throwErrorHttp(error)
         }
     }
 
@@ -36,7 +36,7 @@ export class FavoriteController {
             await this.favoriteService.deleteUserFavoriteInformation(user_Id, restaurant_Id);
         }
         catch (error) {
-            throwError(error);
+            throwErrorHttp(error);
         }
     }
 }
