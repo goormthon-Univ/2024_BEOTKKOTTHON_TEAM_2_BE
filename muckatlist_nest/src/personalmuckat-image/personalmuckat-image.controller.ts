@@ -30,7 +30,7 @@ export class PersonalmuckatImageController {
         }
     }
 
-    @Delete('/:personalmuckat_Id')
+    @Delete('/:user_Id/:personalmuckat_Id')
     async deleteAllPersonalmuckatImage(@Param('user_Id') user_Id: string, @Param('personalmuckat_Id') personalmuckat_Id: string){
         try{
 
@@ -40,7 +40,7 @@ export class PersonalmuckatImageController {
         }
     }
 
-    @Delete('/:personalmuckat_Id/:image_Id')
+    @Delete('/:user_Id/:personalmuckat_Id/:image_Id')
     async deletePersonalmuckatImage(@Param('user_Id') user_Id: string, @Param('personalmuckat_Id') personalmuckat_Id: string, @Param('image_Id') image_Id: string){
         try{
 

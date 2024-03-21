@@ -31,8 +31,8 @@ export class PersonalmuckatController {
     }
 
 
-    @Delete('/:personalmuckat_Id/:user_Id')
-    async deletePersonalmuckat(@Param('personalmuckat_Id') groupmuckat_Id: string, @Param('user_Id') user_Id: string){
+    @Delete('/:user_Id/:personalmuckat_Id')
+    async deletePersonalmuckat(@Param('user_Id') user_Id: string, @Param('personalmuckat_Id') groupmuckat_Id: string){
         try{
 
         }
