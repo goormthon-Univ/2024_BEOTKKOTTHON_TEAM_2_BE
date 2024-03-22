@@ -17,7 +17,7 @@ export class UserService {
                 return {
                     message: '로그인 완료',
                     statusCode: 200,
-                    body: user
+                    // body: user
                 };
             }
             else
