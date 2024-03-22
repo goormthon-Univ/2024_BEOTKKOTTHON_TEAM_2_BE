@@ -19,7 +19,7 @@ pipeline {
                 dir('./muckatlist_nest'){
                     script {
                         sh 'touch .env'
-                        sh 'ehco DATABASE_URL=${DATABASE_URL} > .env'
+                        sh 'echo DATABASE_URL=${DATABASE_URL} > .env'
                         sh 'cat .env'
                         sh 'npm install'
                         sh 'npx prisma init --datasource-provider mysql'
