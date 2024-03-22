@@ -133,12 +133,13 @@ export class GroupmuckatService {
             const groupmuckatList = await this.prisma.muckat_user.findMany({
                 where: {
                     kakao_id: kakao_Id,
-                }
+                },
+                include: { muckat_list: true }
             });
             return {
                 message: '사용자의 그룹 먹킷리스트 목록 불러오기 완료',
                 statusCode: 200,
-                body: groupmuckatList,
+                body: groupmuckatList.map(item => item.muckat_list.group_name),
             }
         }
         catch (error) {
@@ -163,7 +164,7 @@ export class GroupmuckatService {
                 return {
                     MessageChannel: '해당 먹킷리스트 유저 조회 완료',
                     statusCode: 200,
-                    body: muckatMember.map(item => item.user_info),
+                    body: muckatMember.map(item => item.user_info.user_id),
                 }
             }
             else

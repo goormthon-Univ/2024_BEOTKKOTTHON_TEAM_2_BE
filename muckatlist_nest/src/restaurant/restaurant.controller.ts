@@ -20,7 +20,7 @@ export class RestaurantController {
     }
 
     @ApiOperation({ summary: '맛집 상세 조회'})
-    @Get('/:restaurant_Id')
+    @Get('/details/:restaurant_Id')
     async getRestaurantInformation(@Param('restaurant_Id') restaurant_Id: string){
         try{
           return await this.restaurantService.getInformationOfRestaurant(restaurant_Id);
@@ -31,7 +31,7 @@ export class RestaurantController {
     }
 
     @ApiOperation({ summary: '카테고리 별 맛집 조회'})
-    @Get('/:category')
+    @Get('/category/:category')
     async getCategoryRestaurant(@Param('category') category: string){
         try{
           return await this.restaurantService.getCategoryRestaurantInformation(category);
@@ -42,7 +42,7 @@ export class RestaurantController {
     }
 
     @ApiOperation({ summary: '전체 맛집 중 검색'})
-    @Get('/:token')
+    @Get('/search/:token')
     async getAllRestaurantList(@Param('token') token: string){
       try{
         return await this.restaurantService.searchAllRestaurantInformation(token);
@@ -53,7 +53,7 @@ export class RestaurantController {
     }
 
     @ApiOperation({ summary: '카테고리 맛집 중 검색' })
-    @Get('/:category/:token')
+    @Get('/search/:category/:token')
     async getCategoryRestaurantList(@Param('category') category: string, @Param('token') token: string){
       try{
         return await this.restaurantService.searchCategoryRestaurantInformation(category, token);
