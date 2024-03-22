@@ -9,15 +9,15 @@ export class GroupmuckatService {
     constructor(private readonly prisma: PrismaClient){}
     async removeMuckatlist(groupmuckat_Id: string, kakao_Id: string) {
         try{
-            const groupmuckat = await this.prisma.muckat_list.findUnique({
+            const groupmuckat_User = await this.prisma.muckat_user.findFirst({
                 where: {
                     muckat_id: groupmuckat_Id,
-                    kakao_id: kakao_Id
+                    kakao_id: kakao_Id,
                 }
-            })
-            if (groupmuckat !== null){
-                if(groupmuckat.room_master){
-                    await this.prisma.muckat_list.deleteMany({
+            });
+            if (groupmuckat_User !== null){
+                if(groupmuckat_User.room_master){
+                    await this.prisma.muckat_list.delete({
                         where: {
                             muckat_id: groupmuckat_Id
                         }
@@ -28,7 +28,7 @@ export class GroupmuckatService {
                     }
                 }
                 else{
-                    await this.prisma.muckat_list.delete({
+                    await this.prisma.muckat_user.deleteMany({
                         where: {
                             muckat_id: groupmuckat_Id,
                             kakao_id: kakao_Id,
@@ -61,22 +61,20 @@ export class GroupmuckatService {
             const groupmuckat = await this.prisma.muckat_list.findUnique({
                 where: {
                     muckat_id: postGroupmuckatJoinDto.groupmuckat_Id,
-                    group_name: postGroupmuckatJoinDto.groupmuckat_Name,
                 }
             });
             if(groupmuckat !== null){
-                const user = await this.prisma.muckat_list.create({
+                const user = await this.prisma.muckat_user.create({
                     data: {
+                        muckat_user_id: uuid(),
                         muckat_id: postGroupmuckatJoinDto.groupmuckat_Id,
-                        group_name: postGroupmuckatJoinDto.groupmuckat_Name,
-                        room_master: false,
                         kakao_id: postGroupmuckatJoinDto.kakao_Id,
+                        room_master: false,
                     }
                 });
                 return {
                     message: '그룹 먹킷리스트 회원 등록 완료',
                     statusCode: 201,
-                    body: user,
                 };
             }
             else{
@@ -98,19 +96,28 @@ export class GroupmuckatService {
 
     async createMuckatlist(postGroupmuckatDto: PostGroupmuckatDto) {
         try{
+            const muckat_Id = uuid();
             const groupmuckat = await this.prisma.muckat_list.create({
                 data: {
-                    muckat_id: uuid(),
+                    muckat_id: muckat_Id,
                     group_name: postGroupmuckatDto.groupmuckat_Name,
-                    room_master: true,
-                    kakao_id: postGroupmuckatDto.kakao_Id
                 }
             })
-            return {
-                message: '그룹 먹킷리스트 생성 완료',
-                statusCode: 201,
-                body: groupmuckat,
+            if(groupmuckat !== null){
+                const groupmuckat_User = await this.prisma.muckat_user.create({
+                    data: {
+                        muckat_user_id: uuid(),
+                        muckat_id: muckat_Id,
+                        kakao_id: postGroupmuckatDto.kakao_Id,
+                        room_master: true,
+                    }
+                });
+                return {
+                    message: '그룹 먹킷리스트 생성 완료',
+                    statusCode: 201,
+                }
             }
+            
         }
         catch (error) {
             console.error('서비스: ', error);
@@ -123,7 +130,7 @@ export class GroupmuckatService {
     }
     async getAllMuckatlistById(kakao_Id: string) {
         try{
-            const groupmuckatList = await this.prisma.muckat_list.findMany({
+            const groupmuckatList = await this.prisma.muckat_user.findMany({
                 where: {
                     kakao_id: kakao_Id,
                 }
