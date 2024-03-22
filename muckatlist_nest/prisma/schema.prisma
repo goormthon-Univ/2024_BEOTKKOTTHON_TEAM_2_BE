@@ -7,112 +7,63 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model group_muckat_list {
-  group_muckat_id       String                  @id @db.VarChar(255)
-  group_name            String?                 @db.VarChar(255)
-  room_master           Boolean?                @db.Bit(1)
-  kakao_id              String?                 @db.VarChar(255)
-  groupmuckat_id        String                  @db.VarChar(255)
-  user_id               String?                 @db.VarChar(255)
-  user_info             user_info?              @relation(fields: [kakao_id], references: [kakao_id], onDelete: Cascade, onUpdate: NoAction, map: "FKk6k3thow2demk42t6xe974f2")
-  group_muckat_memo     group_muckat_memo[]
-  group_muckat_schedule group_muckat_schedule[]
-  image_group           image_group[]
+model image {
+  image_id    String       @id @db.VarChar(255)
+  timestamp   DateTime?    @db.Date
+  muckat_id   String?      @db.VarChar(255)
+  muckat_list muckat_list? @relation(fields: [muckat_id], references: [muckat_id], onDelete: Cascade, onUpdate: NoAction, map: "FKdm6xyxaeyy5owi3ws8bu5rn70")
 
-  @@index([kakao_id], map: "FKk6k3thow2demk42t6xe974f2")
+  @@index([muckat_id], map: "FKdm6xyxaeyy5owi3ws8bu5rn70")
 }
 
-model group_muckat_memo {
-  group_muckat_id   String            @db.VarChar(255)
-  restaurant_id     String            @db.VarChar(255)
-  group_muckat_list group_muckat_list @relation(fields: [group_muckat_id], references: [group_muckat_id], onDelete: Cascade, onUpdate: NoAction, map: "FKcjm4a47dt8ukpoxiojlm2dfa2")
-  restaurant_info   restaurant_info   @relation(fields: [restaurant_id], references: [restaurant_id], onDelete: Cascade, onUpdate: NoAction, map: "FKpc25i10kpm343fx08xchwy1jf")
+model muckat_list {
+  muckat_id       String            @id @db.VarChar(255)
+  group_name      String?           @db.VarChar(255)
+  room_master     Boolean?          @db.Bit(1)
+  kakao_id        String?           @db.VarChar(255)
+  image           image[]
+  user_info       user_info?        @relation(fields: [kakao_id], references: [kakao_id], onDelete: Cascade, onUpdate: NoAction, map: "FKddvnjgnu96sumkkh847wjcvwp")
+  muckat_memo     muckat_memo[]
+  muckat_schedule muckat_schedule[]
 
-  @@id([group_muckat_id, restaurant_id])
-  @@index([restaurant_id], map: "FKpc25i10kpm343fx08xchwy1jf")
+  @@index([kakao_id], map: "FKddvnjgnu96sumkkh847wjcvwp")
 }
 
-model group_muckat_schedule {
-  schedule_id       String             @id @db.VarChar(255)
-  timestamp         DateTime?          @db.Date
-  group_muckat_id   String?            @db.VarChar(255)
-  restaurant_id     String?            @db.VarChar(255)
-  restaurant_info   restaurant_info?   @relation(fields: [restaurant_id], references: [restaurant_id], onDelete: Cascade, onUpdate: NoAction, map: "FK14gmce7lhulwiijqo0tcsblco")
-  group_muckat_list group_muckat_list? @relation(fields: [group_muckat_id], references: [group_muckat_id], onDelete: Cascade, onUpdate: NoAction, map: "FKeilehjulpjlgnfixhmjosqcv9")
+model muckat_memo {
+  muckat_id       String          @db.VarChar(255)
+  restaurant_id   String          @db.VarChar(255)
+  is_check        Boolean?        @db.Bit(1)
+  restaurant_info restaurant_info @relation(fields: [restaurant_id], references: [restaurant_id], onDelete: Cascade, onUpdate: NoAction, map: "FK1jjs19k4xp54ufjd7d9d323h9")
+  muckat_list     muckat_list     @relation(fields: [muckat_id], references: [muckat_id], onDelete: Cascade, onUpdate: NoAction, map: "FK69ypcea1ijd4rerwpst96yxuo")
 
-  @@index([restaurant_id], map: "FK14gmce7lhulwiijqo0tcsblco")
-  @@index([group_muckat_id], map: "FKeilehjulpjlgnfixhmjosqcv9")
+  @@id([muckat_id, restaurant_id])
+  @@index([restaurant_id], map: "FK1jjs19k4xp54ufjd7d9d323h9")
 }
 
-model image_group {
-  image_group_id    String             @id @db.VarChar(255)
-  timestamp         DateTime?          @db.Date
-  groupmuckat_id    String?            @db.VarChar(255)
-  group_muckat_list group_muckat_list? @relation(fields: [groupmuckat_id], references: [group_muckat_id], onDelete: Cascade, onUpdate: NoAction, map: "FK4gcr3qggnmi4evs2pe3onl5fd")
+model muckat_schedule {
+  schedule_id     String           @id @db.VarChar(255)
+  timestamp       DateTime?        @db.Date
+  muckat_id       String?          @db.VarChar(255)
+  restaurant_id   String?          @db.VarChar(255)
+  muckat_list     muckat_list?     @relation(fields: [muckat_id], references: [muckat_id], onDelete: Cascade, onUpdate: NoAction, map: "FKfq0ya6y160bpquvwa9vh0tkoq")
+  restaurant_info restaurant_info? @relation(fields: [restaurant_id], references: [restaurant_id], onDelete: Cascade, onUpdate: NoAction, map: "FKm5c0q7yje371e8vhh2wmxp1y1")
 
-  @@index([groupmuckat_id], map: "FK4gcr3qggnmi4evs2pe3onl5fd")
-}
-
-model image_personal {
-  image_personal_id    String                @id @db.VarChar(255)
-  timestamp            DateTime?             @db.Date
-  personal_muckat_id   String?               @db.VarChar(255)
-  user_id              String?               @db.VarChar(255)
-  personal_muckat_list personal_muckat_list? @relation(fields: [personal_muckat_id], references: [personal_muckat_id], onDelete: Cascade, onUpdate: NoAction, map: "FK4y487mft4tvmqj2snudoy81jv")
-
-  @@index([personal_muckat_id], map: "FK4y487mft4tvmqj2snudoy81jv")
-}
-
-model personal_muckat_list {
-  personal_muckat_id       String                     @id @db.VarChar(255)
-  personal_name            String?                    @db.VarChar(255)
-  kakao_id                 String?                    @db.VarChar(255)
-  user_id                  String?                    @db.VarChar(255)
-  image_personal           image_personal[]
-  user_info                user_info?                 @relation(fields: [kakao_id], references: [kakao_id], onDelete: Cascade, onUpdate: NoAction, map: "FKgipxfdlncjl53v1ewneqruo5e")
-  personal_muckat_memo     personal_muckat_memo[]
-  personal_muckat_schedule personal_muckat_schedule[]
-
-  @@index([kakao_id], map: "FKgipxfdlncjl53v1ewneqruo5e")
-}
-
-model personal_muckat_memo {
-  personal_muckat_id   String               @db.VarChar(255)
-  restaurant_id        String               @db.VarChar(255)
-  restaurant_info      restaurant_info      @relation(fields: [restaurant_id], references: [restaurant_id], onDelete: Cascade, onUpdate: NoAction, map: "FKhrvoacll5q1kt39qen1b0svyc")
-  personal_muckat_list personal_muckat_list @relation(fields: [personal_muckat_id], references: [personal_muckat_id], onDelete: Cascade, onUpdate: NoAction, map: "FKpo0aw49fsvrup757t32a1vb8i")
-
-  @@id([personal_muckat_id, restaurant_id])
-  @@index([restaurant_id], map: "FKhrvoacll5q1kt39qen1b0svyc")
-}
-
-model personal_muckat_schedule {
-  schedule_id          String                @id @db.VarChar(255)
-  timestamp            DateTime?             @db.Date
-  personal_muckat_id   String?               @db.VarChar(255)
-  restaurant_id        String?               @db.VarChar(255)
-  restaurant_info      restaurant_info?      @relation(fields: [restaurant_id], references: [restaurant_id], onDelete: Cascade, onUpdate: NoAction, map: "FKfn3f70ncpo6benux27bb05v8y")
-  personal_muckat_list personal_muckat_list? @relation(fields: [personal_muckat_id], references: [personal_muckat_id], onDelete: Cascade, onUpdate: NoAction, map: "FKi9oalsapqv8i8tnwppg3066a4")
-
-  @@index([restaurant_id], map: "FKfn3f70ncpo6benux27bb05v8y")
-  @@index([personal_muckat_id], map: "FKi9oalsapqv8i8tnwppg3066a4")
+  @@index([muckat_id], map: "FKfq0ya6y160bpquvwa9vh0tkoq")
+  @@index([restaurant_id], map: "FKm5c0q7yje371e8vhh2wmxp1y1")
 }
 
 model restaurant_info {
-  restaurant_id            String                     @id @db.VarChar(255)
-  address                  String?                    @db.VarChar(255)
-  avg_grade                Float?
-  category                 String?                    @db.VarChar(255)
-  link                     String?                    @db.VarChar(255)
-  phone_number             String?                    @db.VarChar(255)
-  restaurant_name          String?                    @db.VarChar(255)
-  review_count             Int?
-  group_muckat_memo        group_muckat_memo[]
-  group_muckat_schedule    group_muckat_schedule[]
-  personal_muckat_memo     personal_muckat_memo[]
-  personal_muckat_schedule personal_muckat_schedule[]
-  user_favorite            user_favorite[]
-  user_review              user_review[]
+  restaurant_id   String            @id @db.VarChar(255)
+  address         String?           @db.VarChar(255)
+  avg_grade       Float?
+  category        String?           @db.VarChar(255)
+  link            String?           @db.VarChar(255)
+  phone_number    String?           @db.VarChar(255)
+  restaurant_name String?           @db.VarChar(255)
+  review_count    Int?
+  muckat_memo     muckat_memo[]
+  muckat_schedule muckat_schedule[]
+  user_review     user_review[]
 }
 
 model university_info {
@@ -123,29 +74,14 @@ model university_info {
   user_info       user_info[]
 }
 
-model user_favorite {
-  heart_id        BigInt           @id @default(autoincrement())
-  restaurant_id   String?          @db.VarChar(255)
-  kakao_id        String?          @db.VarChar(255)
-  user_id         String?          @db.VarChar(255)
-  user_info       user_info?       @relation(fields: [kakao_id], references: [kakao_id], onDelete: Cascade, onUpdate: NoAction, map: "FKls27new7k0sgynn9r7uisc7sf")
-  restaurant_info restaurant_info? @relation(fields: [restaurant_id], references: [restaurant_id], onDelete: Cascade, onUpdate: NoAction, map: "FKpebo7icvhl8dqn5iew3in0ct0")
-
-  @@index([kakao_id], map: "FKls27new7k0sgynn9r7uisc7sf")
-  @@index([restaurant_id], map: "FKpebo7icvhl8dqn5iew3in0ct0")
-}
-
 model user_info {
-  kakao_id             String                 @id @db.VarChar(255)
-  fcm_token            String?                @db.VarChar(255)
-  point                Int?
-  user_id              String?                @db.VarChar(255)
-  university_name      String?                @db.VarChar(255)
-  group_muckat_list    group_muckat_list[]
-  personal_muckat_list personal_muckat_list[]
-  user_favorite        user_favorite[]
-  university_info      university_info?       @relation(fields: [university_name], references: [university_name], onDelete: Cascade, onUpdate: NoAction, map: "FK9e1ab5ppk0i8s2ywln9s25qw5")
-  user_review          user_review[]
+  kakao_id        String           @id @db.VarChar(255)
+  fcm_token       String?          @db.VarChar(255)
+  user_id         String?          @db.VarChar(255)
+  university_name String?          @db.VarChar(255)
+  muckat_list     muckat_list[]
+  university_info university_info? @relation(fields: [university_name], references: [university_name], onDelete: Cascade, onUpdate: NoAction, map: "FK9e1ab5ppk0i8s2ywln9s25qw5")
+  user_review     user_review[]
 
   @@index([university_name], map: "FK9e1ab5ppk0i8s2ywln9s25qw5")
 }
@@ -155,10 +91,9 @@ model user_review {
   details         String?          @db.VarChar(255)
   like_count      Int?
   star            Float?
-  write_time      String?          @db.VarChar(255)
+  write_time      DateTime?        @db.Date
   restaurant_id   String?          @db.VarChar(255)
   kakao_id        String?          @db.VarChar(255)
-  user_id         String?          @db.VarChar(255)
   restaurant_info restaurant_info? @relation(fields: [restaurant_id], references: [restaurant_id], onDelete: Cascade, onUpdate: NoAction, map: "FKk5s9qoc9tescy10mlfmw06bbf")
   user_info       user_info?       @relation(fields: [kakao_id], references: [kakao_id], onDelete: Cascade, onUpdate: NoAction, map: "FKr4lyt8xch7fegkvsal1lk1s4r")
 

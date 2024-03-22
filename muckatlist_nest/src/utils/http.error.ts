@@ -42,7 +42,6 @@ export function throwErrorHttp(error: Error) {
     else if (error instanceof PreconditionFailedException)
         throw new HttpException('PreconditionFailed', HttpStatus.PRECONDITION_FAILED);
     else{
-        console.error('Unexpected error occurred:', error);
         throw new HttpException('Internal Server Error', HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

@@ -8,14 +8,14 @@ async function bootstrap() {
   // Swagger 옵션 설정
   const options = new DocumentBuilder()
     .setTitle('Nestjs')
-    .setDescription('유저, 맛집, 그룹 먹킷리스트, 개인 먹킷리스트, 마음함, 추억보관함 관련 API 명세서가 기록되어 있습니다.')
-    .setVersion('1.0')
+    .setDescription('유저, 맛집, 그룹 먹킷리스트, 그룹 먹킷리스트 추억보관함 관련 API 명세서가 기록되어 있습니다.')
+    .setVersion('2.0')
     .addTag('유저')
-    .addTag('개인 먹킷리스트')
-    .addTag('개인 먹킷리스트 추억 보관함')
+    // .addTag('개인 먹킷리스트')
+    // .addTag('개인 먹킷리스트 추억 보관함')
     .addTag('그룹 먹킷리스트')
     .addTag('그룹 먹킷리스트 추억 보관함')
-    .addTag('마음함')
+    // .addTag('마음함')
     .addTag('맛집')
     .build();
 

@@ -79,7 +79,6 @@ export class UserService {
                     data: {
                         kakao_id: postUserDto.kakao_Id,
                         fcm_token: postUserDto.fcm_Token,
-                        point: 0,
                         user_id: postUserDto.user_Id,
                         university_name: postUserDto.university_Name,
                     }
