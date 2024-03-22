@@ -12,7 +12,12 @@ export class GroupmuckatController {
     @ApiOperation({ summary: '사용자가 참가하고 있는 모든 그룹 먹킷리스트 목록 조회'})
     @Get('/:kakao_Id')
     async getGroupmuckat(@Param('kakao_Id') kakao_Id: string){
-        
+        try{
+            return await this.groupmuckatService.getAllMuckatlistById(kakao_Id);
+        }
+        catch (error) {
+            throwErrorHttp(error);
+        }
     }
 
 
@@ -20,7 +25,7 @@ export class GroupmuckatController {
     @Post()
     async postGroupmuckat(@Body() postGroupmuckatDto: PostGroupmuckatDto){
         try{
-
+            return await this.groupmuckatService.createMuckatlist(postGroupmuckatDto);
         }
         catch (error) {
             throwErrorHttp(error);
@@ -31,7 +36,7 @@ export class GroupmuckatController {
     @Post('/join')
     async postGroupmuckatJoin(@Body() postGroupmuckatJoinDto: PostGroupmuckatJoinDto){
         try{
-
+            return await this.groupmuckatService.joinMuckatlist(postGroupmuckatJoinDto);
         }
         catch (error) {
             throwErrorHttp(error);
@@ -52,7 +57,7 @@ export class GroupmuckatController {
     @Delete('/:groupmuckat_Id/:kakao_Id')
     async deleteGroupmuckat(@Param('groupmuckat_Id') groupmuckat_Id: string, @Param('kakao_Id') kakao_Id: string){
         try{
-
+            return await this.groupmuckatService.removeMuckatlist(groupmuckat_Id, kakao_Id);
         }
         catch (error) {
             throwErrorHttp(error);

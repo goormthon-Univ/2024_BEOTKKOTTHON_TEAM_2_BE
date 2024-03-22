@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+// import { Injectable } from '@nestjs/common';
 
-@Injectable()
-export class PersonalmuckatImageService {}
+// @Injectable()
+// export class PersonalmuckatImageService {}

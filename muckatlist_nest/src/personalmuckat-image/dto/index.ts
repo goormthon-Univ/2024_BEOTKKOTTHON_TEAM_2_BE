@@ -1,1 +1,1 @@
-export * from './post-personalmuckat-image.dto';
+// export * from './post-personalmuckat-image.dto';

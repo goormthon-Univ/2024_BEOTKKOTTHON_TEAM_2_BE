@@ -12,7 +12,7 @@ export class RestaurantController {
     @Get()
     async getAllRestaurant(){
       try{
-
+        return await this.restaurantService.getAllRestaurantInformation(); 
       } 
       catch (error) {
         throwErrorHttp(error);
@@ -23,7 +23,7 @@ export class RestaurantController {
     @Get('/:restaurant_Id')
     async getRestaurantInformation(@Param('restaurant_Id') restaurant_Id: string){
         try{
-
+          return await this.restaurantService.getInformationOfRestaurant(restaurant_Id);
         } 
         catch (error) {
           throwErrorHttp(error);
@@ -34,10 +34,32 @@ export class RestaurantController {
     @Get('/:category')
     async getCategoryRestaurant(@Param('category') category: string){
         try{
-
+          return await this.restaurantService.getCategoryRestaurantInformation(category);
         } 
         catch (error) {
           throwErrorHttp(error);
         } 
+    }
+
+    @ApiOperation({ summary: '전체 맛집 중 검색'})
+    @Get('/:token')
+    async getAllRestaurantList(@Param('token') token: string){
+      try{
+        return await this.restaurantService.searchAllRestaurantInformation(token);
+      } 
+      catch (error) {
+        throwErrorHttp(error);
+      } 
+    }
+
+    @ApiOperation({ summary: '카테고리 맛집 중 검색' })
+    @Get('/:category/:token')
+    async getCategoryRestaurantList(@Param('category') category: string, @Param('token') token: string){
+      try{
+        return await this.restaurantService.searchCategoryRestaurantInformation(category, token);
+      } 
+      catch (error) {
+        throwErrorHttp(error);
+      } 
     }
 }

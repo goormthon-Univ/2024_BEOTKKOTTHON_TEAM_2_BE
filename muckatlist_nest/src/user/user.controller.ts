@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post } from '@nestjs/common';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { UserService } from './user.service';
-import { PatchUserDto, PostUserDto } from './dto';
+import { LoginDto, PatchUserDto, PostUserDto } from './dto';
 import { throwErrorHttp } from 'src/utils';
 
 @ApiTags('유저')
@@ -12,9 +12,9 @@ export class UserController {
     @ApiOperation({ summary: '로그인'})
     @HttpCode(200)
     @Post('/login')
-    async login(@Body('kakao_Id') kakao_Id: string){
+    async login(@Body() loginDto: LoginDto){
         try{
-            return await this.userService.login(kakao_Id);
+            return await this.userService.login(loginDto.kakao_Id);
         }
         catch (error) {
             throwErrorHttp(error);
@@ -43,25 +43,25 @@ export class UserController {
         }
     }
 
-    @ApiOperation({ summary: '사용자 정보 수정(포인트, 닉네임, 학교정보, fcm_Token 포함)'})
-    @Patch()
-    async patchUserInformation(@Body() patchUserDto: PatchUserDto){
-        try{
-            return await this.userService.modifyUser(patchUserDto);
-        }
-        catch (error) {
-            throwErrorHttp(error);
-        }
-    }
+    // @ApiOperation({ summary: '사용자 정보 수정(포인트, 닉네임, 학교정보, fcm_Token 포함)'})
+    // @Patch()
+    // async patchUserInformation(@Body() patchUserDto: PatchUserDto){
+    //     try{
+    //         return await this.userService.modifyUser(patchUserDto);
+    //     }
+    //     catch (error) {
+    //         throwErrorHttp(error);
+    //     }
+    // }
 
-    @ApiOperation({ summary: '탈퇴'})
-    @Delete('/:kakao_Id')
-    async deleteUserInformation(@Param('kakao_Id') kakao_Id: string){
-        try{
-            return await this.userService.removeUser(kakao_Id);
-        }
-        catch (error) {
-            throwErrorHttp(error);
-        }
-    }
+    // @ApiOperation({ summary: '탈퇴'})
+    // @Delete('/:kakao_Id')
+    // async deleteUserInformation(@Param('kakao_Id') kakao_Id: string){
+    //     try{
+    //         return await this.userService.removeUser(kakao_Id);
+    //     }
+    //     catch (error) {
+    //         throwErrorHttp(error);
+    //     }
+    // }
 }

@@ -1,8 +1,8 @@
-import { ApiProperty } from "@nestjs/swagger";
+// import { ApiProperty } from "@nestjs/swagger";
 
-export class PostPersonalmuckatImageDto{
-    @ApiProperty({ type: 'string', format: 'binary' })
-    image: File;
-    @ApiProperty()
-    personalmuckat_Id: string;
-}
+// export class PostPersonalmuckatImageDto{
+//     @ApiProperty({ type: 'string', format: 'binary' })
+//     image: File;
+//     @ApiProperty()
+//     personalmuckat_Id: string;
+// }
