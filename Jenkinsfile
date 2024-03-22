@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    environment {
+        DATABASE_URL = System.getenv('DATABASE_URL')
+    }
     tools {
         nodejs "NodeJS"
     }
@@ -15,7 +18,13 @@ pipeline {
             steps {
                 dir('./muckatlist_nest'){
                     script {
+                        sh 'touch .env'
+                        sh 'ehco DATABASE_URL=${DATABASE_URL} > .env'
+                        sh 'cat .env'
                         sh 'npm install'
+                        sh 'npx prisma init --datasource-provider mysql'
+                        sh 'npx prisma db pull'
+                        sh 'npx prisma generate'
                     }
                 }
             }
