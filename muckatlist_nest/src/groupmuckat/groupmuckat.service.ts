@@ -61,10 +61,11 @@ export class GroupmuckatService {
             const groupmuckat = await this.prisma.muckat_list.findUnique({
                 where: {
                     muckat_id: postGroupmuckatJoinDto.groupmuckat_Id,
+                    group_name: postGroupmuckatJoinDto.groupmuckat_Name,
                 }
             });
             if(groupmuckat !== null){
-                const user = this.prisma.muckat_list.create({
+                const user = await this.prisma.muckat_list.create({
                     data: {
                         muckat_id: postGroupmuckatJoinDto.groupmuckat_Id,
                         group_name: postGroupmuckatJoinDto.groupmuckat_Name,
