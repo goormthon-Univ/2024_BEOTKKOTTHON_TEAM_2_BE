@@ -150,5 +150,36 @@ export class GroupmuckatService {
                 throw new InternalServerErrorException();
         }
     }
+
+    async getUserInformationByMuckatId(muckat_Id: string) {
+        try{
+            const muckatMember = await this.prisma.muckat_user.findMany({
+                where: {
+                    muckat_id: muckat_Id,
+                },
+                include: { user_info: true }
+            });
+            if (muckatMember !== null){
+                return {
+                    MessageChannel: '해당 먹킷리스트 유저 조회 완료',
+                    statusCode: 200,
+                    body: muckatMember.map(item => item.user_info),
+                }
+            }
+            else
+                throw new NotFoundException();
+            
+        }
+        catch (error) {
+            console.error('서비스: ', error);
+            if (error instanceof PrismaClientKnownRequestError) {
+                throwPrismaError(error);
+            }
+            else if (error instanceof NotFoundException)
+                throw new NotFoundException();
+            else
+                throw new InternalServerErrorException();
+        }
+    }
     
 }

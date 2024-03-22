@@ -43,6 +43,17 @@ export class GroupmuckatController {
         }
     }
 
+    @ApiOperation({ summary: '특정 그룹 먹킷리스트 유저 목록 조회' })
+    @Get('/user-info/:groupmuckat_Id')
+    async getUserListByMuckatId(@Param('groupmuckat_Id') groupmuckat_Id: string){
+        try{
+            return await this.groupmuckatService.getUserInformationByMuckatId(groupmuckat_Id);
+        }
+        catch (error) {
+            throwErrorHttp(error);
+        }
+    }
+
     // @Patch()
     // async patchGroupmuckat(@Body() patchGroupmuckatDto: PatchGroupmuckatDto){
     //     try{
