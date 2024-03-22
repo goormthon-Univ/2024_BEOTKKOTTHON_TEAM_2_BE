@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        DATABASE_URL = System.getenv('DATABASE_URL')
+        DATABASE_URL = "${env.DATABASE_URL}"
     }
     tools {
         nodejs "NodeJS"
