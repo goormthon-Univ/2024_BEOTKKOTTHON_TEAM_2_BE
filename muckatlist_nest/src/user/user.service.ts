@@ -5,7 +5,7 @@ import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import { throwPrismaError } from 'src/utils';
 @Injectable()
 export class UserService {
-    constructor(private readonly prisma: PrismaClient){}
+    constructor(private readonly prisma: PrismaClient) { }
     async login(kakao_Id: string) {
         try {
             const user = await this.prisma.user_info.findUnique({
@@ -74,7 +74,7 @@ export class UserService {
             });
             if (user !== null)
                 throw new ConflictException();
-            else if (user === null) {
+            else {
                 const saveUser = await this.prisma.user_info.create({
                     data: {
                         kakao_id: postUserDto.kakao_Id,
