@@ -2,6 +2,8 @@ pipeline {
     agent any
     environment {
         DATABASE_URL = "${env.DATABASE_URL}"
+        PRIVATE_KEY = "${env.PRIVATE_KEY}"
+        PRIVATE_KEY_ID = "${env.PRIVATE_KEY_ID}"
     }
     tools {
         nodejs "NodeJS"
@@ -20,6 +22,8 @@ pipeline {
                     script {
                         sh 'touch .env'
                         sh 'echo DATABASE_URL="${DATABASE_URL}" > .env'
+                        sh 'echo PRIVATE_KEY="${PRIVATE_KEY}" >> .env'
+                        sh 'echo PRIVATE_KEY_ID="${PRIVATE_KEY_ID}" >> .env'  
                         sh 'cat .env'
                         sh 'npm install'
                         sh 'rm -rf prisma'
