@@ -1,8 +1,9 @@
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
-
+import * as dotenv from 'dotenv';
 async function bootstrap() {
+  dotenv.config();
   const app = await NestFactory.create(AppModule);
   app.enableCors();
   // Swagger 옵션 설정
@@ -17,6 +18,7 @@ async function bootstrap() {
     .addTag('그룹 먹킷리스트 추억 보관함')
     // .addTag('마음함')
     .addTag('맛집')
+    .addTag('푸시 메시지')
     .build();
 
   const document = SwaggerModule.createDocument(app, options, {

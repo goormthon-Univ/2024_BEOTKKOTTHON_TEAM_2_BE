@@ -7,6 +7,10 @@ import { GroupmuckatImageModule } from './groupmuckat-image/groupmuckat-image.mo
 // import { PersonalmuckatImageModule } from './personalmuckat-image/personalmuckat-image.module';
 import { UserModule } from './user/user.module';
 import { PrismaClient } from '@prisma/client';
+// import { FcmModule } from './fcm/fcm.module';
+import { ScheduleModule } from '@nestjs/schedule';
+import { NotificationCronJob } from './notification-cron-job';
+import { FcmService } from './fcm.service';
 
 @Global()
 @Module({
@@ -18,9 +22,11 @@ import { PrismaClient } from '@prisma/client';
     GroupmuckatImageModule,
     // PersonalmuckatImageModule,
     UserModule,
+    // FcmModule,
+    ScheduleModule.forRoot(),
   ],
   controllers: [],
-  providers: [PrismaClient],
+  providers: [PrismaClient, NotificationCronJob, FcmService],
   exports: [PrismaClient],
 })
 export class AppModule {
